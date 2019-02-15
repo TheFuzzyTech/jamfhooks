@@ -1,5 +1,5 @@
 =====
-Myblog
+Jamf Webhook Receiver
 =====
 
 This is a utility for to create webhooks in your JSS instance and pointed back
