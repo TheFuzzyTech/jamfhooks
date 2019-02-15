@@ -1,0 +1,9 @@
+{% extends "jamf_webhook_receiver/base.html" %}
+{% block content %}
+<h1>TEST</h1>
+<form  method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+  {{ JSSServerForm.as_p }}
+  <input type="submit" name="" value="Add Server">
+</form>
+{% endblock %}

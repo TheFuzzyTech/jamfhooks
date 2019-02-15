@@ -1,0 +1,10 @@
+/* NFV Blue */
+.bg-nfv{
+  background-color: #6AB2E2;
+}
+/* Padding to create space below the navbar. This gets removed
+   When viewed at mobile screen size*/
+body { padding-top: 70px; }
+@media screen and (max-width: 768px) {
+    body { padding-top: 0px; }
+}

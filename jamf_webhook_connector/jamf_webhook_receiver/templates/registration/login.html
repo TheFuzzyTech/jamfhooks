@@ -1,0 +1,17 @@
+{% extends 'jamf_webhook_receiver/base.html' %}
+
+{% block content %}
+<div class="jubotron">
+  <h2>Please Login:</h2>
+  <h3>(Must be SuperUser)</h3>
+  {% if form.errors %}
+    <p>Your user name and password didn't match</p>
+  {% endif %}
+  <form action="{% url 'login' %}" method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="login">
+    <input type="hidden" name="next" value="{{next}}">
+  </form>
+</div>
+{% endblock %}
