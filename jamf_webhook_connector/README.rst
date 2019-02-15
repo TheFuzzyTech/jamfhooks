@@ -3,7 +3,7 @@ Myblog
 =====
 
 This is a utility for to create webhooks in your JSS instance and pointed back
-to this server.TEST
+to this server.
 
 Quick start
 -----------
