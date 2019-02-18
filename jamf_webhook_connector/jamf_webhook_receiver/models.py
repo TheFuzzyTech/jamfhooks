@@ -3,6 +3,17 @@ from django.urls import reverse
 # Create your models here.
 from django.utils import timezone
 import requests
+
+class SnipeServer(models.Model):
+        name = models.CharField(max_length=25)
+        url = models.URLField(max_length=200, help_text="Your full snipeIT URL")
+        ip = models.GenericIPAddressField(default='0.0.0.0')
+        username = models.CharField(max_length=255)
+        token = models.CharField(max_length=255)
+
+        def __str__(self):
+            return self.name
+
 class JSSServer(models.Model):
     JSSSTATUS = (
                 ('JSSStartup', "JSSStartup"),
@@ -36,6 +47,8 @@ class JSSServer(models.Model):
     SCEPChallenge = models.BooleanField(default=False)
     SmartGroupComputerMembershipChange = models.BooleanField(default=False)
     SmartGroupMobileDeviceMembershipChange = models.BooleanField(default=False)
+    #INTEGRATIONS
+    SnipeServer = models.ManyToManyField(SnipeServer)
 
 
     def get_absolute_url(self):
