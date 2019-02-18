@@ -14,7 +14,7 @@ class JSSServer(models.Model):
     ip = models.GenericIPAddressField(default='0.0.0.0')
     userName = models.CharField(max_length=255)
     password = models.CharField(max_length=255)
-
+    
     '''webhook types'''
     ComputerAdded = models.BooleanField(default=False)
     ComputerCheckIn = models.BooleanField(default=False)

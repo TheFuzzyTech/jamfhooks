@@ -1,4 +1,8 @@
 {% extends "jamf_webhook_receiver/base.html" %}
 {% block content %}
-<h1>DETAIL</h1>
+<h1>{{ object.name }}</h1>
+<p>URL: {{ object.url }}</p>
+{% for integration in JSSIntegrations.all %}
+  <p>{{ integration }}</p>
+{% endfor %}
 {% endblock %}

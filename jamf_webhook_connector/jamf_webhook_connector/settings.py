@@ -28,7 +28,7 @@ SECRET_KEY = 'b6z@6o2ixoku*uusaguy8pat*j$ud7*c=tvj2oup62syjxjsq-'
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
-
+SITE_URL = "http://0.0.0.0:8000"
 
 # Application definition
 
@@ -79,14 +79,10 @@ WSGI_APPLICATION = 'jamf_webhook_connector.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'postgres',
-        'USER': 'postgres',
-        'HOST': 'db',
-        'PORT': 5432,
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'yourdatabasename.db'),
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators

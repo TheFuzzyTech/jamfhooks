@@ -18,7 +18,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 
 # Create your views here.
-allowed_ip = ['10.140.1.161', '173.215.118.194']
+allowed_ip = ['10.140.1.161', '173.215.118.194', '10.140.130.68']
 
 class AboutView(TemplateView):
     template_name = 'index.html'
@@ -64,9 +64,6 @@ class CreateJSSView(LoginRequiredMixin, CreateView):
                     <size>0</size>
                 </display_fields>
             </webhook>"""
-            print(jss_url)
-            print(post_data)
-
             jss_post = requests.post(jss_url, auth=(username, password),
                                      headers=headers, verify=False,
                                      data=post_data)
@@ -160,16 +157,23 @@ def get_client_ip(request):
     else:
         ip = request.META.get('REMOTE_ADDR')
     return ip
-
+'''TO DO:   Add authentication
+            Add Integration Interaction
+            '''
 @require_POST
 @csrf_exempt
 def computer_checkin(request):
     if request.method == 'POST':
         ip = get_client_ip(request)
-        request_data = json.loads(request.body.decode("utf-8"))
-        #print(ip)
         if ip in allowed_ip:
-            #print(request_data['webhook']['webhookEvent'])
-            return HttpResponse('Pong')
+            request_data = json.loads(request.body.decode("utf-8"))
+            return HttpResponse(status=200)
         else:
-            return HttpResponseForbidden('Permissions denied')
+            return HttpResponse(status=401)
+    else:
+        return HttpResponse(status=404)
+        # if ip in allowed_ip:
+        #     #print(request_data['webhook']['webhookEvent'])
+        #     return HttpResponse('Pong')
+        # else
+        #     return HttpResponseForbidden('Permission denied')

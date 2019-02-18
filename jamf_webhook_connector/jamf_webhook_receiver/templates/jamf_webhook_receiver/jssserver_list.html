@@ -10,7 +10,7 @@
   </thead>
   {% for server in object_list %}
   <tr>
-    <td><p><strong>{{ server.name }}</strong></p></td>
+    <td><a href="{% url 'jss_detail' server.pk %}"<p><strong>{{ server.name }}</strong></p></a></td>
     <td><p>{{ server.url }}</p></td>
    <td><a href="{% url 'jss_edit' server.pk %}"><button type="button" class="btn btn-secondary">Edit</button></a></td>
     <td><a href="{% url 'jss_remove' server.pk %}"><button type="button" class="btn btn-danger">Delete</button></a></td>
