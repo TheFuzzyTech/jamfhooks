@@ -90,6 +90,7 @@ class SnipeITServer(models.Model):
 
 
 class JSSIntegrations(models.Model):
+    name = models.CharField(max_length=255)
     server = models.ForeignKey('JSSServer', on_delete=models.CASCADE)
     snipe_IT_server = models.ForeignKey('SnipeITServer',on_delete=models.CASCADE)
 
