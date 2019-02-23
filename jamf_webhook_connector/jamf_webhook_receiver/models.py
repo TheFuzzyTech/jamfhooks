@@ -70,3 +70,28 @@ class JSSServer(models.Model):
 
     def __str__(self):
         return self.name
+
+class SnipeITServer(models.Model):
+    name = models.CharField(max_length=100)
+    url = models.URLField()
+    token = models.CharField(max_length=1000)
+
+    def run(self,serialnumber):
+        snipe_url = self.url+"/api/v1/hardware/byserial/"+serialnumber
+        snipe_headers = {'Authorization': 'Bearer '+self.token,
+                         'Content-Type': 'application/json',
+                         'Accept': 'application/json',
+                         }
+        snipeit_comp_response = requests.get(snipe_url, headers=snipe_headers,)
+
+
+    def __str__(self):
+        return self.name
+
+
+class JSSIntegrations(models.Model):
+    server = models.ForeignKey('JSSServer', on_delete=models.CASCADE)
+    snipe_IT_server = models.ForeignKey('SnipeITServer',on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.name
