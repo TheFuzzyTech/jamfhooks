@@ -9,6 +9,7 @@ services:
       bash -c "python jamf_webhook_connector/manage.py migrate
       && python jamf_webhook_connector/manage.py makemigrations
       && python jamf_webhook_connector/manage.py migrate
+      && python jamf_webhook_connector/manage.py createsuperuser
       && python jamf_webhook_connector/manage.py runserver 0.0.0.0:8000"
     volumes:
       - .:/code
