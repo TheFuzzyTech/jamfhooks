@@ -6,6 +6,6 @@ To Build the Images
 To run in current terminal
 `docker-compose up`
 
-To run in backgroung do
+To run in background
 `docker run jamf_webhook_reveiver_web_1`
 `docker run jamf_webhook_receiver_db_1`
