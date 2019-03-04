@@ -3,13 +3,15 @@ version: '3'
 services:
   db:
     image: postgres
+    container_name: jamfhooks_db
   web:
+    container_name: jamfhooks_web
     build: .
     command: >
-      bash -c "python jamf_webhook_connector/manage.py migrate
+      bash -c "./wait-for-it.sh db:5432 -s -t 60 -- echo 'Database\ up'
+      && python jamf_webhook_connector/manage.py migrate
       && python jamf_webhook_connector/manage.py makemigrations
       && python jamf_webhook_connector/manage.py migrate
-      && python jamf_webhook_connector/manage.py createsuperuser
       && python jamf_webhook_connector/manage.py runserver 0.0.0.0:8000"
     volumes:
       - .:/code
