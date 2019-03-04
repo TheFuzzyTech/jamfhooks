@@ -9,3 +9,4 @@ To run in current terminal
 To run in background
 `docker run jamf_webhook_reveiver_web_1`
 `docker run jamf_webhook_receiver_db_1`
+visit **127.0.0.1:8000/webhooks**
