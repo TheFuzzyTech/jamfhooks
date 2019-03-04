@@ -5,7 +5,11 @@ services:
     image: postgres
   web:
     build: .
-    command: python jamf_webhook_connector/manage.py runserver 0.0.0.0:8000
+    command: >
+      bash -c "python jamf_webhook_connector/manage.py migrate
+      && python jamf_webhook_connector/manage.py makemigrations
+      && python jamf_webhook_connector/manage.py migrate
+      && python jamf_webhook_connector/manage.py runserver 0.0.0.0:8000"
     volumes:
       - .:/code
     ports:
