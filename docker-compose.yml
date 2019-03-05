@@ -12,10 +12,24 @@ services:
       && python jamf_webhook_connector/manage.py migrate
       && python jamf_webhook_connector/manage.py makemigrations
       && python jamf_webhook_connector/manage.py migrate
-      && python jamf_webhook_connector/manage.py runserver 0.0.0.0:8000"
+      && python jamf_webhook_connector/manage.py collectstatic --no-input
+      && cd jamf_webhook_connector
+      && gunicorn jamf_webhook_connector.wsgi:application --bind 0.0.0.0:8000"
     volumes:
       - .:/code
-    ports:
-      - "8000:8000"
+      - static_volume:/code/jamf_webhook_connector/static
+    expose:
+      - 8000
     depends_on:
       - db
+  nginx:
+    container_name: jamfhooks_nginx
+    volumes:
+      - static_volume:/code/jamf_webhook_connector/static
+    build: ./nginx
+    ports:
+      - "0.0.0.0:80:80"
+    depends_on:
+      - web
+volumes:
+  static_volume:
