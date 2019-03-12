@@ -5,7 +5,7 @@ from django.views.decorators.http import require_POST
 import json
 import requests
 from urllib.parse import urlparse
-from jamf_webhook_receiver.models import JSSServer
+from jamf_webhook_receiver.models import JSSServer, JSSIntegrations
 from jamf_webhook_receiver.forms import JSSServerForm
 import socket
 from django.contrib.auth.hashers import make_password
@@ -167,6 +167,12 @@ def computer_checkin(request):
         ip = get_client_ip(request)
         if ip in allowed_ip:
             request_data = json.loads(request.body.decode("utf-8"))
+            serial_number = request_data['event']['serialNumber']
+            print(serial_number)
+            integrations = JSSIntegrations.objects.filter().select_related()
+            for integration in integrations:
+                print(integration.snipe_IT_server.run(serial_number))
+
             return HttpResponse(status=200)
         else:
             return HttpResponse(status=401)

@@ -25,7 +25,7 @@ class JSSServer(models.Model):
     ip = models.GenericIPAddressField(default='0.0.0.0')
     userName = models.CharField(max_length=255)
     password = models.CharField(max_length=255)
-    
+
     '''webhook types'''
     ComputerAdded = models.BooleanField(default=False)
     ComputerCheckIn = models.BooleanField(default=False)
@@ -87,16 +87,17 @@ class JSSServer(models.Model):
 class SnipeITServer(models.Model):
     name = models.CharField(max_length=100)
     url = models.URLField()
-    token = models.CharField(max_length=1000)
+    token = models.CharField(max_length=4000)
 
     def run(self,serialnumber):
-        snipe_url = self.url+"/api/v1/hardware/byserial/"+serialnumber
+        snipe_url = self.url+"/api/v1/hardware/byserial/{}".format(serialnumber)
         snipe_headers = {'Authorization': 'Bearer '+self.token,
                          'Content-Type': 'application/json',
                          'Accept': 'application/json',
                          }
         snipeit_comp_response = requests.get(snipe_url, headers=snipe_headers,)
-
+        snipeit_comp_data = snipeit_comp_response.json()
+        return snipeit_comp_data
 
     def __str__(self):
         return self.name
@@ -106,6 +107,7 @@ class JSSIntegrations(models.Model):
     name = models.CharField(max_length=255)
     server = models.ForeignKey('JSSServer', on_delete=models.CASCADE)
     snipe_IT_server = models.ForeignKey('SnipeITServer',on_delete=models.CASCADE)
+
 
     def __str__(self):
         return self.name
