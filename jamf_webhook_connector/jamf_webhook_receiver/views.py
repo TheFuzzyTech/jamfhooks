@@ -168,10 +168,15 @@ def computer_checkin(request):
         if ip in allowed_ip:
             request_data = json.loads(request.body.decode("utf-8"))
             serial_number = request_data['event']['serialNumber']
-            print(serial_number)
+            device_name = request_data['event']['deviceName']
+            #print(request_data)
             integrations = JSSIntegrations.objects.filter().select_related()
+            jss_server = JSSServer.objects.filter(ip=ip)[0]
+            jss_url = jss_server.url
+            jss_user = jss_server.userName
+            jss_password = jss_server.password
             for integration in integrations:
-                print(integration.snipe_IT_server.run(serial_number))
+                print(integration.snipe_IT_server.run(serial_number,device_name,jss_url,jss_user,jss_password))
 
             return HttpResponse(status=200)
         else:
