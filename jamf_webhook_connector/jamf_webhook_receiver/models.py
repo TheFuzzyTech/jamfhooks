@@ -135,29 +135,39 @@ class SnipeITServer(models.Model):
                         jss_model = (jss_asset_result['computer']['hardware']['model'])
                         if jss_asset_tag == '':
                             return("No asset Tag in Jamf, Cannot Create in Snipe")
-                    return("Device",jss_computer_name, jss_asset_tag, "Not in Snipe")
-                    '''This is Where the device gets created in snipe if possible'''
-                    '''GET ALL MODELS FROM SNIPE TO TRY TO MATCH MODELS'''
-                    snipe_model_url = self.url+"/api/v1/models"
-                    model_params ={"search": jss_model}
-                    snipeit_model_response = requests.get(snipe_model_url, headers=snipe_headers,params=jss_model)
-                    snipeit_model_data = snipeit_model_response.json()
-                    if snipeit_model_response.status_code != 200:
-                        return("NON 200 STATUS")
-                    else:
-                        return('Assign Model Info')
-                    snipe_create_asset = {}
-                    snipe_create_asset['asset_tag'] = jss_asset_tag
-                    snipe_create_asset['status_id'] = 1 #1=Ready to Deploy. This will be the default unil device is checked out
-                    snipe_create_asset['model_id'] = 1 # NEED LOGIC HERE TO TRY TO MATCH MODELS
-                    snipe_create_asset['name'] = jss_computer_name
-
+                        else:
+                            '''This is Where the device gets created in snipe if possible'''
+                            '''GET ALL MODELS FROM SNIPE TO TRY TO MATCH MODELS'''
+                            snipe_model_url = self.url+"/api/v1/models"
+                            model_params ={"search": jss_model}
+                            snipeit_model_response = requests.get(snipe_model_url, headers=snipe_headers,params=model_params)
+                            snipeit_model_data = snipeit_model_response.json()
+                            if snipeit_model_response.status_code != 200:
+                                return("NON 200 STATUS")
+                            else:
+                                #return(snipeit_model_data['rows'][0])
+                                if snipeit_model_data['rows'][0]['name'] != jss_model:
+                                    return("Models do not match")
+                                else:
+                                    snipe_model_id = snipeit_model_data['rows'][0]['id']
+                                    snipe_create_asset = {}
+                                    snipe_create_asset['asset_tag'] = jss_asset_tag
+                                    snipe_create_asset['status_id'] = 1 #1=Ready to Deploy. This will be the default unil device is checked out
+                                    snipe_create_asset['model_id'] = snipe_model_id
+                                    snipe_create_asset['name'] = jss_computer_name
+                                    snipe_create_asset['serial'] = serialnumber
+                                    #return("Device",jss_computer_name, jss_asset_tag, jss_model, "Not in Snipe")
+                                    snipe_create_asset_url = self.url+"/api/v1/hardware/"
+                                    snipeit_create_asset_response = requests.post(snipe_create_asset_url, headers=snipe_headers,json=snipe_create_asset)
+                                    snipeit_create_asset_data = snipeit_create_asset_response.json()
+                                    if snipeit_create_asset_response.status_code != 200:
+                                        return("NON 200 STATUS")
+                                    else:
+                                        return(jss_asset_tag, snipeit_create_asset_data)
                 except ConnectionResetError:
                     return("Connection Reset")
 
-                #snipe_create_asset_url = self.url+"/api/v1/hardware/"
-                #snipeit_create_asset_response = requests.post(snipe_url, headers=snipe_headers,data=create_asset_payload)
-                #snipeit_create_asset_data = snipeit_create_asset_response.json()
+
 
             else:
                 '''IF Device is in Snipe'''
@@ -193,6 +203,7 @@ class SnipeITServer(models.Model):
                         '''ADD LOGIC HERE TO DETERMINE IF DEVICE INFO IS CORRECT'''
                         snipe_patch_payload={}
                         if computer_name == jss_computer_name:
+                            return("names up to date")
                             if asset_tag == jss_asset_tag:
                                 if jss_user_name == "Snipe Checked Out to":
                                     return("Device up to date")
@@ -203,6 +214,7 @@ class SnipeITServer(models.Model):
                         else:
                             '''Logic for if the names do not match'''
                             snipe_patch_payload['name'] = jss_computer_name
+                            snipe_patch_payload['serial']= serialnumber
                             snipe_name_url = self.url+"/api/v1/hardware/{}".format(snipe_comp_id)
                             snipe_headers = {'Authorization': 'Bearer {}'.format(self.token),
                                              'Content-Type': 'application/json',
@@ -213,7 +225,7 @@ class SnipeITServer(models.Model):
                             if snipeit_name_response.status_code != 200:
                                 return(snipeit_name_data.status_code)
                             else:
-                                return("Name Updated", asset_tag,jss_computer_name, snipeit_name_data['payload']['name'])
+                                return("Name Updated", asset_tag,jss_computer_name,)
                 except ConnectionResetError:
                         return("Connection Reset")
 
