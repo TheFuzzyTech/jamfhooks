@@ -31,5 +31,17 @@ services:
       - "0.0.0.0:80:80"
     depends_on:
       - web
+    server:
+        container_name: jamfhooks_sftp
+        build:
+            context: ./sftp
+            args:
+                SSH_MASTER_USER: ${SSH_MASTER_USER}
+                SSH_MASTER_PASS: ${SSH_MASTER_PASS}
+        hostname: sftp
+        ports:
+            - "2222:22"
+        volumes:
+            - ./uploads:/uploads
 volumes:
   static_volume:

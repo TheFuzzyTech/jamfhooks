@@ -118,7 +118,7 @@ class SnipeITServer(models.Model):
                         '''IF JSS RETURNS NON 200STATUS'''
                         response_code = "Response code: "+str(jss_asset_response.status_code)
                         jss_asset_result = response_code
-                        return("response_code")
+                        return(response_code)
                     else:
                         jss_asset_result =  json.loads(jss_asset_response.text)
                         #print(jss_asset_response.text)
@@ -163,7 +163,12 @@ class SnipeITServer(models.Model):
                                     if snipeit_create_asset_response.status_code != 200:
                                         return("NON 200 STATUS")
                                     else:
-                                        return(jss_asset_tag, snipeit_create_asset_data)
+                                        create_asset_status = snipeit_create_asset_data['status']
+                                        if create_asset_status == 'error':
+                                            create_asset_message = snipeit_create_asset_data['messages']
+                                            return(jss_asset_tag,create_asset_status,create_asset_message)
+                                        else:
+                                            return(jss_asset_tag, create_asset_status)
                 except ConnectionResetError:
                     return("Connection Reset")
 
@@ -182,7 +187,7 @@ class SnipeITServer(models.Model):
                         '''IF JSS RETURNS NON 200STATUS'''
                         response_code = "Response code: "+str(jss_asset_response.status_code)
                         jss_asset_result = response_code
-                        return("response_code")
+                        return(response_code)
                     else:
                         jss_asset_result =  json.loads(jss_asset_response.text)
                         #print(jss_asset_response.text)
