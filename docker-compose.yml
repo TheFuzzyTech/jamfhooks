@@ -4,6 +4,9 @@ services:
   db:
     image: postgres
     container_name: jamfhooks_db
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
   web:
     container_name: jamfhooks_web
     build: .
@@ -22,6 +25,9 @@ services:
       - 8000
     depends_on:
       - db
+    environment:
+      - SQL_USER=${POSTGRES_USER}
+      - SQL_PASSWORD=${POSTGRES_PASSWORD}
   nginx:
     container_name: jamfhooks_nginx
     volumes:
@@ -31,17 +37,17 @@ services:
       - "0.0.0.0:80:80"
     depends_on:
       - web
-    server:
-        container_name: jamfhooks_sftp
-        build:
-            context: ./sftp
-            args:
-                SSH_MASTER_USER: ${SSH_MASTER_USER}
-                SSH_MASTER_PASS: ${SSH_MASTER_PASS}
-        hostname: sftp
-        ports:
-            - "2222:22"
-        volumes:
-            - ./uploads:/uploads
+  server:
+    container_name: jamfhooks_sftp
+    build:
+        context: ./sftp
+        args:
+            SSH_MASTER_USER: ${SSH_MASTER_USER}
+            SSH_MASTER_PASS: ${SSH_MASTER_PASS}
+    hostname: sftp
+    ports:
+      - "2222:22"
+    volumes:
+      - ./uploads:/uploads
 volumes:
   static_volume:

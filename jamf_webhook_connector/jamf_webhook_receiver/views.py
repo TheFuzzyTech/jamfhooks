@@ -31,7 +31,7 @@ class JSSDetailView(DetailView):
     model = JSSServer
 
 class CreateJSSView(LoginRequiredMixin, CreateView):
-    login_url = '/login/'
+    login_url = '/admin/'
     redirect_field_name = 'jamf_webhook_receiver/jss_detail.html'
     form_class = JSSServerForm
     model = JSSServer
