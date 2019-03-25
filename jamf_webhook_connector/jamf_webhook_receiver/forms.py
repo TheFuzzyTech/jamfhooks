@@ -1,5 +1,5 @@
 from django import forms
-from jamf_webhook_receiver.models import JSSServer
+from jamf_webhook_receiver.models import JSSServer, JSSIntegrations
 
 class JSSServerForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput())
@@ -29,3 +29,8 @@ class JSSServerForm(forms.ModelForm):
             'title':forms.TextInput(attrs={'class': 'textinputclass'}),
             'text':forms.Textarea(attrs={'class': 'editable medium-editor-textarea postcontent'}),
         }
+
+class JSSIntegrationsForm(forms.ModelForm):
+    class Meta:
+        model = JSSIntegrations
+        fields = ('name','server','snipe_IT_server')

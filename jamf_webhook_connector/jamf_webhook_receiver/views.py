@@ -6,7 +6,7 @@ import json
 import requests
 from urllib.parse import urlparse
 from jamf_webhook_receiver.models import JSSServer, JSSIntegrations
-from jamf_webhook_receiver.forms import JSSServerForm
+from jamf_webhook_receiver.forms import JSSServerForm, JSSIntegrationsForm
 import socket
 from django.contrib.auth.hashers import make_password
 from django.shortcuts import render, get_object_or_404, redirect
@@ -23,12 +23,60 @@ allowed_ip = ['10.140.1.161', '173.215.118.194', '10.140.130.68']
 class AboutView(TemplateView):
     template_name = 'index.html'
 
+
+# INTEGRATION VIEWS
+
+
+class IntegrationListView(ListView):
+    model = JSSIntegrations
+
+class IntegrationDetailView(DetailView):
+    model = JSSIntegrations
+
+
+class IntegrationUpdateView(LoginRequiredMixin, UpdateView):
+    login_url = '/login/'
+    redirect_field_name = 'jamf_webhook_receiver/integration_detail.html'
+    form_class = JSSIntegrationsForm
+    model = JSSIntegrations
+
+class IntegrationDeleteView(LoginRequiredMixin, DeleteView):
+    model = JSSIntegrations
+    success_url = reverse_lazy('integrations_list')
+
+class CreateIntegrationView(LoginRequiredMixin, CreateView):
+    login_url = '/admin/'
+    redirect_field_name = 'jamf_webhook_receiver/integrations_detail.html'
+    form_class = JSSIntegrationsForm
+    model = JSSIntegrations
+
+# JSS VIEWS
+
 class JSSListView(ListView):
     model = JSSServer
 
 
 class JSSDetailView(DetailView):
     model = JSSServer
+
+    def get_context_data(self, **kwargs):
+        # Call the base implementation first to get a context
+        context = super().get_context_data(**kwargs)
+        # Add in a QuerySet of all the integrations
+        context['integrations'] = JSSIntegrations.objects.all()
+        context['this_pk'] = JSSServer.objects.get(pk=self.kwargs.get('pk'))
+        return context
+
+
+class JSSUpdateView(LoginRequiredMixin, UpdateView):
+    login_url = '/login/'
+    redirect_field_name = 'jamf_webhook_receiver/jss_detail.html'
+    form_class = JSSServerForm
+    model = JSSServer
+
+class JSSDeleteView(LoginRequiredMixin, DeleteView):
+    model = JSSServer
+    success_url = reverse_lazy('jss_list')
 
 class CreateJSSView(LoginRequiredMixin, CreateView):
     login_url = '/admin/'
@@ -99,15 +147,7 @@ class CreateJSSView(LoginRequiredMixin, CreateView):
                                                 webhook_endpoint="/webhooks/" + k,)
         return super(CreateJSSView, self).form_valid(form)
 
-class JSSUpdateView(LoginRequiredMixin, UpdateView):
-    login_url = '/login/'
-    redirect_field_name = 'jamf_webhook_receiver/jss_detail.html'
-    form_class = JSSServerForm
-    model = JSSServer
 
-class JSSDeleteView(LoginRequiredMixin, DeleteView):
-    model = JSSServer
-    success_url = reverse_lazy('jss_list')
 
 @require_POST
 @csrf_exempt

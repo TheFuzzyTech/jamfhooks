@@ -1,8 +1,25 @@
 {% extends "jamf_webhook_receiver/base.html" %}
 {% block content %}
 <h1>{{ object.name }}</h1>
-<p>URL: {{ object.url }}</p>
-{% for integration in JSSIntegrations.all %}
-  <p>{{ integration }}</p>
-{% endfor %}
+<p><b>URL: {{ object.url }}</b></p>
+<table class="table table-striped mx-auto">
+  <thead>
+    <th>Name</th>
+    <th>Server</th>
+    <th>Integration</th>
+    <th></th>
+  </thead>
+  {% for integration in integrations %}
+  <tr>
+    <td><p><strong>{{ integration.name }}</strong></p></td>
+    <td><p>{{ integration.server.name }}</p></td>
+    <td><p>{{ integration.snipe_IT_server.name }}</p></td>
+   <td><a href="{% url 'integration_edit' this_pk.pk integration.pk %}"><button type="button" class="btn btn-secondary">Edit</button></a></td>
+    <td><a href="{% url 'integration_remove' this_pk.pk integration.pk %}"> <button type="button" class="btn btn-danger">Delete</button></a></td>
+  </tr>
+    {% endfor %}
+</table>
+<div class="container">
+<a href="{% url 'integration_new' this_pk.pk %}"><button type="button" class="btn btn-primary float-right">Add New</button></a>
+</div>
 {% endblock %}

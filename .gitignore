@@ -116,3 +116,5 @@ dmypy.json
 .pyre/
 *_initial.py
 jamf_webhook_connector/jamf_webhook_receiver/migrations/*
+*.db
+Untitled
