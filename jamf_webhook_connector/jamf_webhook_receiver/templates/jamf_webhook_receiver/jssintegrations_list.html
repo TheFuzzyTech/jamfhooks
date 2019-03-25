@@ -1,0 +1,23 @@
+{% extends "jamf_webhook_receiver/base.html" %}
+{% block content %}
+<h1>INTEGRATIONS</h1>
+<table class="table table-striped mx-auto">
+  <thead>
+    <th>Name</th>
+    <th>Server</th>
+    <th></th>
+    <th></th>
+  </thead>
+{% for integration in object_list %}
+<tr>
+  <td><p><strong>{{ integration.name }}</strong></p></td>
+  <td><p>{{ integration.server.name }}</p></td>
+  <td><button type="button" class="btn btn-secondary">Edit</button></td>
+  <td><button type="button" class="btn btn-danger">Delete</button></td>
+</tr>
+  {% endfor %}
+</table>
+<div class="container">
+<a href="{% url 'integration_new' %}"><button type="button" class="btn btn-primary float-right">Add New</button></a>
+</div>
+{% endblock %}
