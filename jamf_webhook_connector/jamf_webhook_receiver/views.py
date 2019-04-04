@@ -46,7 +46,7 @@ class IntegrationDeleteView(LoginRequiredMixin, DeleteView):
 
 class CreateIntegrationView(LoginRequiredMixin, CreateView):
     login_url = '/admin/'
-    redirect_field_name = 'jamf_webhook_receiver/integrations_detail.html'
+    redirect_field_name = 'jamf_webhook_receiver/jssserver_detail.html'
     form_class = JSSIntegrationsForm
     model = JSSIntegrations
 
