@@ -5,6 +5,7 @@ from django.utils import timezone
 import requests
 import json
 import urllib3
+import os
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 class SnipeServer(models.Model):
         name = models.CharField(max_length=25)
