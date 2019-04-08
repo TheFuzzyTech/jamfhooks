@@ -62,7 +62,7 @@ class JSSServer(models.Model):
             'Accept': 'application/json',
         }
         jss_url = str(url) + "/JSSResource/webhooks/id/0"
-        this_server_url = "http://10.140.130.68:8000" #socket.gethostname()
+        this_server_url = "http://{ip}".format(os.getenv('FQDN')) #socket.gethostname()
         post_data = """<?xml version="1.0" encoding="UTF-8"?>
         <webhook>
             <name>"""+ name + " " + webhook_type +"""</name>
