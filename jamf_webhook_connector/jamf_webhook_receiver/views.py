@@ -16,8 +16,9 @@ from django.views.generic import (TemplateView,ListView,DetailView,CreateView,
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
-
+import os
 # Create your views here.
+'''NEED A WAY TO DYNAMICALLY ADD IP'S HERE'''
 allowed_ip = ['10.140.1.161', '173.215.118.194', '10.140.130.68']
 
 class AboutView(TemplateView):
@@ -46,7 +47,7 @@ class IntegrationDeleteView(LoginRequiredMixin, DeleteView):
 
 class CreateIntegrationView(LoginRequiredMixin, CreateView):
     login_url = '/admin/'
-    redirect_field_name = 'jamf_webhook_receiver/integrations_detail.html'
+    redirect_field_name = 'jamf_webhook_receiver/jssserver_detail.html'
     form_class = JSSIntegrationsForm
     model = JSSIntegrations
 
@@ -96,7 +97,7 @@ class CreateJSSView(LoginRequiredMixin, CreateView):
                 'Accept': 'application/json',
             }
             jss_url = str(url) + "/JSSResource/webhooks/id/0"
-            this_server_url = "http://10.140.130.68:8000" #socket.gethostname()
+            this_server_url = "http://{ip}".format(os.getenv(ip='FQDN')) #socket.gethostname()
             post_data = """<?xml version="1.0" encoding="UTF-8"?>
             <webhook>
                 <name>"""+ name + " " + webhook_type +"""</name>
