@@ -89,9 +89,9 @@ WSGI_APPLICATION = 'jamf_webhook_connector.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': os.getenv('SQL_USER'),
-        'USER': os.getenv('SQL_USER'),
-        'PASSWORD': os.getenv('SQL_PASSWORD'),
+        'NAME': os.getenv('POSTGRES_USER'),
+        'USER': os.getenv('POSTGRES_USER'),
+        'PASSWORD': os.getenv('POSTGRES_PASSWORD'),
         'HOST': 'db',
         'PORT': '5432',
     }
