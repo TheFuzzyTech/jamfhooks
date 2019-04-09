@@ -7,6 +7,8 @@ services:
     environment:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - ./data:/var/lib/postgresql/data
   web:
     container_name: jamfhooks_web
     build: .
@@ -39,3 +41,4 @@ services:
       - web
 volumes:
   static_volume:
+  data:
