@@ -15,14 +15,6 @@ services:
     environment:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-    command: >
-      bash -c "./wait-for-it.sh db:5432 -s -t 60 -- echo 'Database\ up'
-      && python jamf_webhook_connector/manage.py migrate
-      && python jamf_webhook_connector/manage.py makemigrations
-      && python jamf_webhook_connector/manage.py migrate
-      && python jamf_webhook_connector/manage.py collectstatic --no-input
-      && cd jamf_webhook_connector
-      && gunicorn jamf_webhook_connector.wsgi:application --bind 0.0.0.0:8000"
     volumes:
       - .:/code
       - static_volume:/code/jamf_webhook_connector/static

@@ -1,6 +1,6 @@
 #macOS and Linux setup script
 docker-compose build --no-cache
-docker-compose up -d --force-recreate
+docker-compose up --force-recreate
 #sleep to let migrations finish
 echo "Waiting for Migrations..."
 sleep 10
