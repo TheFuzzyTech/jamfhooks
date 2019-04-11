@@ -5,7 +5,7 @@ __pycache__/
 *.DS_Store
 # C extensions
 *.so
-data/
+
 # Distribution / packaging
 .Python
 build/
@@ -115,6 +115,7 @@ dmypy.json
 # Pyre type checker
 .pyre/
 *_initial.py
+/database
 jamf_webhook_connector/jamf_webhook_receiver/migrations/*
 *.db
 Untitled
