@@ -8,7 +8,7 @@ services:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     volumes:
-      - ./database:/var/lib/postgresql/data
+      - ./data/database:/var/lib/postgresql/data
   web:
     container_name: jamfhooks_web
     build: .
@@ -23,13 +23,13 @@ services:
     depends_on:
       - db
   nginx:
+    image: nginx
     container_name: jamfhooks_nginx
     volumes:
       - static_volume:/code/jamf_webhook_connector/static
       - ./data/nginx:/etc/nginx/conf.d
       - ./data/certbot/conf:/etc/letsencrypt
       - ./data/certbot/www:/var/www/certbot
-    build: ./nginx
     ports:
       - "0.0.0.0:80:80"
       - "0.0.0.0:443:443"

@@ -115,7 +115,7 @@ dmypy.json
 # Pyre type checker
 .pyre/
 *_initial.py
-/database
+/data/database
 jamf_webhook_connector/jamf_webhook_receiver/migrations/*
 *.db
 Untitled
