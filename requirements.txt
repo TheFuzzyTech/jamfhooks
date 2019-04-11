@@ -10,6 +10,7 @@ gunicorn==19.9.0
 idna==2.8
 ipaddress==1.0.22
 psycopg2==2.7.6.1
+psycopg2-binary==2.8
 py-bcrypt==0.4
 pycparser==2.19
 pytz==2018.9
