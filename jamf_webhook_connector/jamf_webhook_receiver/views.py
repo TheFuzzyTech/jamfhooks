@@ -36,7 +36,7 @@ class IntegrationDetailView(DetailView):
 
 
 class IntegrationUpdateView(LoginRequiredMixin, UpdateView):
-    login_url = '/login/'
+    login_url = '/admin/'
     redirect_field_name = 'jamf_webhook_receiver/integration_detail.html'
     form_class = JSSIntegrationsForm
     model = JSSIntegrations
@@ -70,7 +70,7 @@ class JSSDetailView(DetailView):
 
 
 class JSSUpdateView(LoginRequiredMixin, UpdateView):
-    login_url = '/login/'
+    login_url = '/admin/'
     redirect_field_name = 'jamf_webhook_receiver/jss_detail.html'
     form_class = JSSServerForm
     model = JSSServer
@@ -80,7 +80,7 @@ class JSSDeleteView(LoginRequiredMixin, DeleteView):
     success_url = reverse_lazy('jss_list')
 
 class CreateJSSView(LoginRequiredMixin, CreateView):
-    login_url = '/login/'
+    login_url = '/admin/'
     redirect_field_name = 'jamf_webhook_receiver/jss_detail.html'
     form_class = JSSServerForm
     model = JSSServer
@@ -175,22 +175,6 @@ def jssstatus(request):
         else:
             return HttpResponseForbidden('Permissions denied')
 
-        '''STATUS JSON LOOKS LIKE:
-        {
-        "event": {
-            "hostAddress": "172.31.16.70",
-            "institution": "Company Name",
-            "isClusterMaster": false,
-            "jssUrl": "https://company.jamfcloud.com/",
-            "webApplicationPath": "/usr/local/jss/tomcat/webapps/ROOT"
-        },
-        "webhook": {
-            "id": 7,
-            "name": "Webhook Documentation",
-            "webhookEvent": "JSSShutdown"
-        }
-    }
-    '''
 def get_client_ip(request):
     x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
     if x_forwarded_for:
