@@ -91,32 +91,32 @@ class CreateJSSView(LoginRequiredMixin, CreateView):
         url = urlparse(form.instance.url)
         form.instance.ip = socket.gethostbyname(url.netloc.split(':')[0])
         '''CREATE JSS FUNCTION'''
-        def jss_webhook_create(username, password,url, name, webhook_type, webhook_endpoint):
-            headers = {
-                'Content-Type': 'application/xml',
-                'Accept': 'application/json',
-            }
-            jss_url = str(url) + "/JSSResource/webhooks/id/0"
-            this_server_url = "http://{ip}".format(os.getenv(ip='FQDN')) #socket.gethostname()
-            post_data = """<?xml version="1.0" encoding="UTF-8"?>
-            <webhook>
-                <name>"""+ name + " " + webhook_type +"""</name>
-                <enabled>true</enabled>
-                <url>"""+ this_server_url + webhook_endpoint + """</url>
-                <content_type>application/json</content_type>
-                <event>"""+webhook_type+"""</event>
-                <authentication_type>NONE</authentication_type>
-                <username/>
-                <password/>
-                <enable_display_fields_for_group_object>false</enable_display_fields_for_group_object>
-                <display_fields>
-                    <size>0</size>
-                </display_fields>
-            </webhook>"""
-            jss_post = requests.post(jss_url, auth=(username, password),
-                                     headers=headers, verify=False,
-                                     data=post_data)
-            print(jss_post.text)
+        # def jss_webhook_create(username, password,url, name, webhook_type, webhook_endpoint):
+        #     headers = {
+        #         'Content-Type': 'application/xml',
+        #         'Accept': 'application/json',
+        #     }
+        #     jss_url = str(url) + "/JSSResource/webhooks/id/0"
+        #     this_server_url = "http://{ip}".format(os.getenv(ip='FQDN')) #socket.gethostname()
+        #     post_data = """<?xml version="1.0" encoding="UTF-8"?>
+        #     <webhook>
+        #         <name>"""+ name + " " + webhook_type +"""</name>
+        #         <enabled>true</enabled>
+        #         <url>"""+ this_server_url + webhook_endpoint + """</url>
+        #         <content_type>application/json</content_type>
+        #         <event>"""+webhook_type+"""</event>
+        #         <authentication_type>NONE</authentication_type>
+        #         <username/>
+        #         <password/>
+        #         <enable_display_fields_for_group_object>false</enable_display_fields_for_group_object>
+        #         <display_fields>
+        #             <size>0</size>
+        #         </display_fields>
+        #     </webhook>"""
+        #     jss_post = requests.post(jss_url, auth=(username, password),
+        #                              headers=headers, verify=False,
+        #                              data=post_data)
+        #     print(jss_post.text)
         '''Create Webhooks'''
         webhook_types ={"ComputerAdded":form.instance.ComputerAdded,
                         "ComputerCheckIn":form.instance.ComputerCheckIn,
