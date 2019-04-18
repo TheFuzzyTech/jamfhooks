@@ -196,7 +196,7 @@ def computer_checkin(request):
             device_name = request_data['event']['deviceName']
             #print(request_data)
             integrations = JSSIntegrations.objects.filter().select_related()
-            jss_server = JSSServer.objects.filter(ip=ip)[0]
+            jss_server = JSSServer.objects.filter(ip=ip).first()
             jss_url = jss_server.url
             jss_user = jss_server.userName
             jss_password = jss_server.password
