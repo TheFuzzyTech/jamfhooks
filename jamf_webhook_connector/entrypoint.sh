@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 # Prepare log files and start outputting logs to stdout
 touch /logs/gunicorn.log
@@ -6,7 +6,7 @@ touch /logs/gunicorn-access.log
 
 export DJANGO_SETTINGS_MODULE=jamf_webhook_connector.settings
 
-./wait-for-it.sh db:5432 -s -t 60 -- echo 'Database up'
+./wait-for-it.sh db:5432 -s -t 60 -- echo 'Database is up'
 python jamf_webhook_connector/manage.py migrate
 python jamf_webhook_connector/manage.py makemigrations
 python jamf_webhook_connector/manage.py migrate

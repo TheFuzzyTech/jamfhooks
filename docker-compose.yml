@@ -11,7 +11,7 @@ services:
       - ./data/database:/var/lib/postgresql/data
   web:
     container_name: jamfhooks_web
-    build: .
+    build: ./jamf_webhook_connector
     environment:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
