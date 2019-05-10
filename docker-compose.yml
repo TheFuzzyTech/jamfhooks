@@ -16,7 +16,7 @@ services:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     volumes:
-      - .:/code
+      - ./jamf_webhook_connector:/code
       - static_volume:/code/jamf_webhook_connector/static
     expose:
       - 8000

@@ -121,3 +121,4 @@ Untitled
 .env
 jamf_webhook_connector/static/*
 jamf_webhook_connector/static/
+jamf_webhook_connector/static/admin/css/base.css
