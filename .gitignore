@@ -118,3 +118,5 @@ dmypy.json
 jamf_webhook_connector/jamf_webhook_receiver/migrations/*
 *.db
 Untitled
+.env
+jamf_webhook_connector/static/*
