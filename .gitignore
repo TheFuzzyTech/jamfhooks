@@ -120,3 +120,4 @@ jamf_webhook_connector/jamf_webhook_receiver/migrations/*
 Untitled
 .env
 jamf_webhook_connector/static/*
+jamf_webhook_connector/static/
