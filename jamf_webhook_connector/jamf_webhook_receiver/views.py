@@ -192,8 +192,8 @@ def computer_checkin(request):
         ip = get_client_ip(request)
         if ip in allowed_ip:
             request_data = json.loads(request.body.decode("utf-8"))
-            serial_number = request_data['event']['serialNumber']
-            device_name = request_data['event']['deviceName']
+            serial_number = request_data['event']['computer']['serialNumber']
+            device_name = request_data['event']['computer']['deviceName']
             #print(request_data)
             integrations = JSSIntegrations.objects.filter().select_related()
             jss_server = JSSServer.objects.filter(ip=ip).first()
