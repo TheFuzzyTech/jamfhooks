@@ -24,6 +24,7 @@ urlpatterns = [
     url(r"^jss/$", views.JSSListView.as_view(), name="jss_list"),
     path("jssstatus", views.jssstatus),
     path("ComputerCheckIn", views.computer_checkin),
+    path("MobileDeviceCheckIn", views.IOS_checkin),
     url(r"^about/$", views.AboutView.as_view(), name="about"),
     url(r"^jss/(?P<pk>\d+$)", views.JSSDetailView.as_view(), name="jss_detail"),
     url(r"^jss/new/$", views.CreateJSSView.as_view(), name="jss_new"),

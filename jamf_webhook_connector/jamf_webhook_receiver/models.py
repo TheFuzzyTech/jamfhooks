@@ -110,7 +110,7 @@ class SnipeITServer(models.Model):
     url = models.URLField()
     token = models.CharField(max_length=4000)
 
-    def run(self, serialnumber, devicename, jss_url, jss_user, jss_password):
+    def mac_run(self, serialnumber, devicename, jss_url, jss_user, jss_password):
         snipe_url = self.url + "/api/v1/hardware/byserial/{}".format(serialnumber)
         snipe_headers = {
             "Authorization": "Bearer " + self.token,
@@ -302,6 +302,9 @@ class SnipeITServer(models.Model):
                                 return ("Name Updated", asset_tag, jss_computer_name)
                 except ConnectionResetError:
                     return "Connection Reset"
+
+    def IOS_run(self, serialnumber, devicename, jss_url, jss_user, jss_password):
+        return 0
 
     def __str__(self):
         return self.name
