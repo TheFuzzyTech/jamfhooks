@@ -20,17 +20,33 @@ from django.conf.urls import url
 
 
 urlpatterns = [
-    path('', views.AboutView.as_view(),name="index"),
-    url(r'^jss/$',views.JSSListView.as_view(),name='jss_list'),
-    path('jssstatus', views.jssstatus),
-    path('ComputerCheckIn', views.computer_checkin),
-    url(r'^about/$', views.AboutView.as_view(),name='about'),
-    url(r'^jss/(?P<pk>\d+$)',views.JSSDetailView.as_view(),name='jss_detail'),
-    url(r'^jss/new/$', views.CreateJSSView.as_view(), name='jss_new'),
-    url(r'^jss/(?P<pk>\d+)/edit/$',views.JSSUpdateView.as_view(), name='jss_edit'),
-    url(r'^jss/(?P<pk>\d+)/remove/$',views.JSSDeleteView.as_view(),name='jss_remove'),
-    url(r'^jss/(?P<pk>\d+)/integrations/$',views.IntegrationListView.as_view(),name='integration_list'),
-    url(r'^jss/(?P<pk>\d+)/integrations/new/$',views.CreateIntegrationView.as_view(),name='integration_new'),
-    url(r'^jss/(?P<pk_1>\d+)/integrations/(?P<pk>\d+)/edit/$',views.IntegrationUpdateView.as_view(),name='integration_edit'),
-    url(r'^jss/(?P<pk_1>\d+)/integrations/(?P<pk>\d+)/remove/$',views.IntegrationDeleteView.as_view(),name='integration_remove')
+    path("", views.AboutView.as_view(), name="index"),
+    url(r"^jss/$", views.JSSListView.as_view(), name="jss_list"),
+    path("jssstatus", views.jssstatus),
+    path("ComputerCheckIn", views.computer_checkin),
+    url(r"^about/$", views.AboutView.as_view(), name="about"),
+    url(r"^jss/(?P<pk>\d+$)", views.JSSDetailView.as_view(), name="jss_detail"),
+    url(r"^jss/new/$", views.CreateJSSView.as_view(), name="jss_new"),
+    url(r"^jss/(?P<pk>\d+)/edit/$", views.JSSUpdateView.as_view(), name="jss_edit"),
+    url(r"^jss/(?P<pk>\d+)/remove/$", views.JSSDeleteView.as_view(), name="jss_remove"),
+    url(
+        r"^jss/(?P<pk>\d+)/integrations/$",
+        views.IntegrationListView.as_view(),
+        name="integration_list",
+    ),
+    url(
+        r"^jss/(?P<pk>\d+)/integrations/new/$",
+        views.CreateIntegrationView.as_view(),
+        name="integration_new",
+    ),
+    url(
+        r"^jss/(?P<pk_1>\d+)/integrations/(?P<pk>\d+)/edit/$",
+        views.IntegrationUpdateView.as_view(),
+        name="integration_edit",
+    ),
+    url(
+        r"^jss/(?P<pk_1>\d+)/integrations/(?P<pk>\d+)/remove/$",
+        views.IntegrationDeleteView.as_view(),
+        name="integration_remove",
+    ),
 ]
