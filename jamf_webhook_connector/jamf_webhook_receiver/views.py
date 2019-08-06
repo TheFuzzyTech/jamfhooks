@@ -29,6 +29,15 @@ import os
 allowed_ip = ["10.140.1.161", "173.215.118.194", "10.140.130.68"]
 
 
+def get_client_ip(request):
+    x_forwarded_for = request.META.get("HTTP_X_FORWARDED_FOR")
+    if x_forwarded_for:
+        ip = x_forwarded_for.split(",")[0]
+    else:
+        ip = request.META.get("REMOTE_ADDR")
+    return ip
+
+
 class AboutView(TemplateView):
     template_name = "index.html"
 
@@ -58,7 +67,7 @@ class IntegrationDeleteView(LoginRequiredMixin, DeleteView):
 
 class CreateIntegrationView(LoginRequiredMixin, CreateView):
     login_url = "/admin/"
-    redirect_field_name = "jamf_webhook_receiver/jssserver_detail.html"
+    redirect_field_name = "jamf_webhook_receiver/index.html"
     form_class = JSSIntegrationsForm
     model = JSSIntegrations
 
@@ -168,15 +177,6 @@ def jssstatus(request):
             return HttpResponseForbidden("Permissions denied")
 
 
-def get_client_ip(request):
-    x_forwarded_for = request.META.get("HTTP_X_FORWARDED_FOR")
-    if x_forwarded_for:
-        ip = x_forwarded_for.split(",")[0]
-    else:
-        ip = request.META.get("REMOTE_ADDR")
-    return ip
-
-
 """TO DO:   Add authentication
             Add Integration Interaction
             """
@@ -235,6 +235,8 @@ def IOS_checkin(request):
 
             return HttpResponse(status=200)
         else:
+            print("Reported IP: {}".format(ip))
+            print(request.headers)
             return HttpResponse(status=401)
     else:
         return HttpResponse(status=404)
