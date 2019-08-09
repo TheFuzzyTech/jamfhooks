@@ -19,7 +19,7 @@ Needed:
 
 Modify .env file to fit your needs.
 
-`git clone https://github.com/thefuzzyjew/jamf_webhook_connector.git`
+`git clone https://github.com/thefuzzyjew/jamfhooks.git`
 
 run `bash setup.sh` in terminal
 
