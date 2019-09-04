@@ -319,7 +319,7 @@ class SnipeITServer(models.Model):
             if snipeit_ios_data["total"] == 0:
                 # return("ASSET NOT IN SNIPE")
                 """ADD LOGIC HERE TO ADD THE DEVICE TO SNIPE"""
-                """Get More Info about the Computer"""
+                """Get More Info about the Device"""
                 jss_headers = {
                     "Accept": "application/json",
                     "Content-Type": "application/json",
@@ -381,10 +381,23 @@ class SnipeITServer(models.Model):
                             if snipeit_model_response.status_code != 200:
                                 return "NON 200 STATUS"
                             else:
+                                """Create the Model In Snipe
+                                HOW DO I GET CATEGORY ID AND MANUFACTURER ID?"""
                                 # return(snipeit_model_data['rows'][0])
                                 if snipeit_model_data["rows"][0]["name"] != jss_model:
-                                    return "Models do not match. Please add {} to Snipe".format(
-                                        jss_model
+                                    # Get Category ID containing iPad.
+                                    # It may be better to have these fields in the
+                                    # Database as opposed to doing a get Call
+                                    snipe_category_url = self.url + "/api/v1/categories"
+                                    snipe_model_url = self.url + "/api/v1/models"
+                                    snipe_create_IOS_model = {}
+                                    snipe_create_IOS_model["name"] = jss_model
+                                    snipe_create_IOS_model[""]
+                                    snipeit_model_create_response = requests.post(
+                                        snipe_model_url,
+                                        headers=snipe_headers,
+                                        params=model_params,
+                                        json=snipe_create_IOS_model,
                                     )
                                 else:
                                     snipe_model_id = snipeit_model_data["rows"][0]["id"]
