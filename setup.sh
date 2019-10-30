@@ -10,8 +10,8 @@ if [ $TESTING = true ]; then
 else
   docker exec -it $(docker ps -aqf "name=jamfhooks_web") python manage.py createsuperuser
 fi
-echo "visit 127.0.0.1/admin to log in"
-echo "visit 127.0.0.1/webhooks after logging in to begin"
+echo "visit 127.0.0.1:8000/admin to log in"
+echo "visit 127.0.0.1:8000/webhooks after logging in to begin"
 #docker-compose run web python jamf_webhook_connector/manage.py createsuperuser
 #docker start jamfhooks_db
 #docker start jamfhooks_web
