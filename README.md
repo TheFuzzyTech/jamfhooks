@@ -23,5 +23,5 @@ Modify .env file to fit your needs.
 
 run `bash setup.sh` in terminal
 
-visit **127.0.0.1:8000/webhooks**
+visit **127.0.0.1/webhooks**
 ###### Windows Users
