@@ -19,7 +19,7 @@ Needed:
 
 Modify .env file to fit your needs.
 
-`git clone https://github.com/thefuzzyjew/jamfhooks.git`
+`git clone https://github.com/thefuzzytech/jamfhooks.git`
 
 run `bash setup.sh` in terminal
 
